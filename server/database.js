@@ -11,6 +11,61 @@ const pool = mysql
   })
   .promise();
 
+//Crear usuario
+export async function createUser(name, email, password) {
+  const [result] = await pool.query(
+    `INSERT INTO Users (name, email, password) values (?,?,?)`,
+    [name, email, password]
+  );
+}
+
+//Crear Triatlon
+export async function createTriathlon(userId) {
+  const [result] = await pool.query(
+    `INSERT INTO Triathlons (userId) values (?)`,
+    [userId]
+  );
+}
+
+//Crear carrera
+export async function createRun(
+  userId,
+  triathlonId,
+  time,
+  distance,
+  avgPace,
+  map
+) {
+  const [result] = await pool.query(
+    `INSERT INTO Runs (userId, triathlonId, time, distance, avgPace, map) values (?,?,?,?,?,?)`,
+    [userId, triathlonId, time, distance, avgPace, map]
+  );
+}
+
+//Crear natacion
+export async function createSwim(userId, triathlonId, time, distance, avgPace) {
+  const [result] = await pool.query(
+    `INSERT INTO Swims (userId, triathlonId, time, distance, avgPace) values (?,?,?,?,?)`,
+    [userId, triathlonId, time, distance, avgPace]
+  );
+}
+
+//Crear ciclismo
+export async function createCycling(
+  userId,
+  triathlonId,
+  time,
+  distance,
+  avgSpeed,
+  map
+) {
+  const [result] = await pool.query(
+    `INSERT INTO Cyclings (userId, triathlonId, time, distance, avgSpeed, map) values (?,?,?,?,?,?)`,
+    [userId, triathlonId, time, distance, avgSpeed, map]
+  );
+}
+
+//Obtener usuario por id
 export async function getUserById(id) {
   const [row] = await pool.query(`SELECT * FROM Users WHERE id = ?`, [id]);
   return row[0];
