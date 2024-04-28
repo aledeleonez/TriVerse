@@ -25,6 +25,7 @@ export async function createTriathlon(userId) {
     `INSERT INTO Triathlons (userId) values (?)`,
     [userId]
   );
+  return result[0];
 }
 
 //Crear carrera
