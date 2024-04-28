@@ -27,10 +27,10 @@ export default function SignUpScreen() {
       const email = await fetch(
         `http://192.168.1.40:8080/users?email=${email}`
       );
-      if (email) {
+      if (email.ok) {
         Alert.alert("Ya hay un usuario vinculado a este correo electronico.");
       } else {
-        const response = fetch(`http://192.168.1.40:8080/users`, {
+        const response = await fetch(`http://192.168.1.40:8080/users`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
