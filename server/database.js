@@ -70,3 +70,20 @@ export async function getUserById(id) {
   const [row] = await pool.query(`SELECT * FROM Users WHERE id = ?`, [id]);
   return row[0];
 }
+
+//Obtener usuario por email
+export async function getUserByEmail(email) {
+  const [row] = await pool.query(`SELECT * FROM Users WHERE email = ?`, [
+    email,
+  ]);
+  return row[0];
+}
+
+//Obtener usuario por email y contraseña
+export async function getUserCredentials(email, password) {
+  const [row] = await pool.query(
+    `SELECT * FROM Users WHERE email = ? AND password = ? `,
+    [email, password]
+  );
+  return row[0];
+}

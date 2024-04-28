@@ -1,14 +1,15 @@
-import express from "express";
-import { createRun, createUser, getUserById } from "./database.js";
+import express, { response } from "express";
+import {
+  createRun,
+  createUser,
+  getUserByEmail,
+  getUserById,
+  getUserCredentials,
+} from "./database.js";
 import cors from "cors";
 
-const corsOptions = {
-  methods: ["POST", "GET"],
-  credentials: true,
-};
 const app = express();
 app.use(express.json());
-app.use(cors());
 
 app.post("/users", async (req, res) => {
   const { name, email, password } = req.body;
@@ -32,6 +33,24 @@ app.post("/runs", async (req, res) => {
 app.get("/users/:id", async (req, res) => {
   const user = await getUserById(req.params.id);
   res.status(200).send(user);
+});
+
+app.get("/users/:email", async (req, res) => {
+  const user = await getUserByEmail(req.params.email);
+  if (user) res.status(200);
+});
+
+app.get("/users", async (req, res) => {
+  const email = req.query.email;
+  const password = req.query.password;
+  const user = await getUserCredentials(email, password);
+  if (user) {
+    res.status(200).json({ message: `Email: ${email}, Password: ${password}` });
+  } else {
+    res
+      .status(400)
+      .json({ error: "El usuario o la contraseña son incorrectos" });
+  }
 });
 
 app.listen(8080, () => {
