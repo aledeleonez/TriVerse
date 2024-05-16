@@ -8,6 +8,9 @@ import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import HomeScreen from "./screens/HomeScreen";
 import Activity from "./screens/Activity";
+import Swim from "./screens/Swim";
+import Bike from "./screens/Bike";
+import Run from "./screens/Run";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +25,9 @@ function App() {
         <Stack.Screen name='SignUp' component={SignUpScreen} />
         <Stack.Screen name='Home' component={HomeScreen} />
         <Stack.Screen name='Activity' component={Activity} />
+        <Stack.Screen name='Swim' component={Swim} />
+        <Stack.Screen name='Bike' component={Bike} />
+        <Stack.Screen name='Run' component={Run} />
       </Stack.Navigator>
     </NavigationContainer>
   );

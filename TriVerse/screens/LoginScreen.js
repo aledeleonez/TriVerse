@@ -85,7 +85,8 @@ export default function LoginScreen() {
           <View className='w-full'>
             <TouchableOpacity
               className='w-full bg-[#003249] p-3 rounded-2xl mb-3'
-              onPress={handleLogin}
+              //onPress={handleLogin}
+              onPress={() => navigation.push("Home")}
             >
               <Text className='text-xl font-bold text-white text-center'>
                 Log in

@@ -3,7 +3,7 @@ import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 
-export default function HomeScreen() {
+export default function Activity() {
   const navigation = useNavigation();
   return (
     <View className='flex-1'>
@@ -24,7 +24,10 @@ export default function HomeScreen() {
           />
         </View>
         <View className='w-full items-center'>
-          <TouchableOpacity className='w-5/6 bg-[#003249] p-3 rounded-2xl mb-3 flex-row items-center justify-center'>
+          <TouchableOpacity
+            className='w-5/6 bg-[#003249] p-3 rounded-2xl mb-3 flex-row items-center justify-center'
+            onPress={() => navigation.push("Swim")}
+          >
             <Text className='text-xl font-bold text-white text-center mr-2'>
               Comenzar actividad
             </Text>
