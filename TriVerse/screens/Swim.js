@@ -1,10 +1,39 @@
-import React from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, TextInput, Button } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Swim() {
   const navigation = useNavigation();
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [swim, setSwim] = useState(false);
+  const [intervalId, setIntervalId] = useState(null);
+
+  useEffect(() => {
+    if (swim) {
+      const id = setInterval(() => {
+        setElapsedTime((prevTime) => prevTime + 1);
+      }, 1000);
+      setIntervalId(id);
+    } else if (!swim && intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [swim]);
+
+  const formatTime = (seconds) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    return [h, m, s].map((val) => (val < 10 ? `0${val}` : val)).join(":");
+  };
+
+  const handleStartStop = () => {
+    setSwim(!swim);
+  };
+
   return (
     <View className='flex-1'>
       {/* Encabezado */}
@@ -22,11 +51,12 @@ export default function Swim() {
         <Text className='text-black font-bold tracking-wider text-2xl mb-3 text-center'>
           Tiempo
         </Text>
-        <Text className='text-black font-bold tracking-wider text-8xl mb-5 text-center'>
-          0h 24min 19s
+        <Text className='text-black font-bold tracking-wider text-7xl mb-5 text-center'>
+          {formatTime(elapsedTime)}
         </Text>
       </View>
       <View className='w-full items-center'>
+        <Button title={swim ? "Stop" : "Start"} onPress={handleStartStop} />
         <TouchableOpacity
           className='w-5/6 bg-[#003249] p-3 rounded-2xl mb-3 flex-row items-center justify-center'
           onPress={() => navigation.push("Bike")}
