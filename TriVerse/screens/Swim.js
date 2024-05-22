@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, TextInput, Button } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Swim() {
   const navigation = useNavigation();
@@ -55,18 +56,18 @@ export default function Swim() {
           {formatTime(elapsedTime)}
         </Text>
       </View>
-      <View className='w-full items-center'>
-        <Button title={swim ? "Stop" : "Start"} onPress={handleStartStop} />
+      <View className='w-full flex-row items-center justify-center mb-5'>
         <TouchableOpacity
-          className='w-5/6 bg-[#003249] p-3 rounded-2xl mb-3 flex-row items-center justify-center'
+          className='w-5/12 bg-[#003249] p-3 rounded-2xl m-1 flex-row items-center justify-center'
+          onPress={handleStartStop}
+        >
+          <Icon name={swim ? "pause" : "play"} size={24} color='white' />
+        </TouchableOpacity>
+        <TouchableOpacity
+          className='w-5/12 bg-[#003249] p-3 rounded-2xl m-1 flex-row items-center justify-center'
           onPress={() => navigation.push("Bike")}
         >
-          <Icon
-            name='bicycle'
-            size={28}
-            color='white'
-            className='left-3 top-4'
-          />
+          <MaterialCommunityIcons name='bike' size={24} color='white' />
         </TouchableOpacity>
       </View>
       {/* Pie de página */}

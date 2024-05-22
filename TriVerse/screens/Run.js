@@ -1,11 +1,15 @@
 // Run.js
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
-import MapView, { Polyline } from "react-native-maps";
+import MapView, { Polyline, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import Icon from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 const Run = () => {
+  const navigation = useNavigation();
   const [locations, setLocations] = useState([]);
   const [distance, setDistance] = useState(0);
   const [speed, setSpeed] = useState(0);
@@ -105,6 +109,23 @@ const Run = () => {
     return null;
   };
 
+  const renderMarker = () => {
+    if (region) {
+      return (
+        <Marker
+          coordinate={{
+            latitude: region.latitude,
+            longitude: region.longitude,
+          }}
+          title='Tu ubicación'
+        >
+          <FontAwesome6 name='person-running' size={24} color='blue' />
+        </Marker>
+      );
+    }
+    return null;
+  };
+
   return (
     <View className='flex-1'>
       {/* Encabezado */}
@@ -114,6 +135,7 @@ const Run = () => {
       {region ? (
         <MapView className='w-full h-80 mb-3' region={region}>
           {renderPolyline()}
+          {renderMarker()}
         </MapView>
       ) : (
         <Text className='w-full h-80 mb-3'>Loading...</Text>
@@ -138,21 +160,22 @@ const Run = () => {
           3,00 km
         </Text>
       </View>
-      <View>
-        <Button title={running ? "Stop" : "Start"} onPress={handleStartStop} />
-        <Button
-          title='Finish'
-          onPress={() => {
-            /* lógica para finalizar actividad */
-          }}
-        />
+      <View className='w-full items-center mt-2'>
+        <TouchableOpacity
+          className='w-5/12 bg-[#003249] p-3 rounded-2xl m-1 flex-row items-center justify-center'
+          onPress={handleStartStop}
+        >
+          <Ionicons name={running ? "pause" : "play"} size={24} color='white' />
+        </TouchableOpacity>
       </View>
-      <View className='w-full items-center'>
+      <View className='w-full items-center mb-6'>
         <TouchableOpacity
           className='w-5/6 bg-[#003249] p-3 rounded-2xl mb-3 flex-row items-center justify-center'
-          onPress={() => navigation.push("Run")}
+          onPress={() => navigation.push("Home")}
         >
-          <Icon name='home' size={28} color='white' className='left-3 top-4' />
+          <Text className='text-xl font-bold text-white text-center mr-2'>
+            Finalizar actividad
+          </Text>
         </TouchableOpacity>
       </View>
       {/* Pie de página */}

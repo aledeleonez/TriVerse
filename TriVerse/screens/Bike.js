@@ -1,9 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
-import MapView, { Polyline } from "react-native-maps";
+import { View, Text, TouchableOpacity } from "react-native";
+import MapView, { Polyline, Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { FontAwesome6 } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Bike() {
   const navigation = useNavigation();
@@ -104,13 +106,31 @@ export default function Bike() {
             latitude: loc.coords.latitude,
             longitude: loc.coords.longitude,
           }))}
-          strokeColor='#007EA7' // black
+          strokeColor='#007EA7'
           strokeWidth={6}
         />
       );
     }
     return null;
   };
+
+  const renderMarker = () => {
+    if (region) {
+      return (
+        <Marker
+          coordinate={{
+            latitude: region.latitude,
+            longitude: region.longitude,
+          }}
+          title='Tu ubicación'
+        >
+          <MaterialCommunityIcons name='bike' size={24} color='blue' />
+        </Marker>
+      );
+    }
+    return null;
+  };
+
   return (
     <View className='flex-1'>
       {/* Encabezado */}
@@ -122,6 +142,7 @@ export default function Bike() {
         {region ? (
           <MapView className='w-full h-80 mb-3' region={region}>
             {renderPolyline()}
+            {renderMarker()}
           </MapView>
         ) : (
           <Text className='w-full h-80 mb-3'>Loading...</Text>
@@ -146,19 +167,29 @@ export default function Bike() {
             {distance.toFixed(2)} km
           </Text>
         </View>
-        <View className='w-full items-center'>
+        <View className='w-full flex-row items-center justify-center'>
           <TouchableOpacity
-            className='w-5/6 bg-[#003249] p-3 rounded-2xl mb-3 flex-row items-center justify-center'
+            className='w-5/12 bg-[#003249] p-3 rounded-2xl m-1 flex-row items-center justify-center'
             onPress={handleStartStop}
           >
-            <Text className='text-white'>{cycling ? "Stop" : "Start"}</Text>
+            <Ionicons
+              name={cycling ? "pause" : "play"}
+              size={24}
+              color='white'
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            className='w-5/12 bg-[#003249] p-3 rounded-2xl m-1 flex-row items-center justify-center'
+            onPress={() => navigation.push("Run")}
+          >
+            <FontAwesome6 name='person-running' size={24} color='white' />
           </TouchableOpacity>
         </View>
       </View>
       {/* Pie de página */}
       <View className='bg-[#007EA7] h-20 flex-row justify-around items-center'>
         <TouchableOpacity onPress={() => navigation.push("Home")}>
-          <Icon name='home' size={24} color='white' />
+          <Ionicons name='home' size={24} color='white' />
         </TouchableOpacity>
       </View>
     </View>
