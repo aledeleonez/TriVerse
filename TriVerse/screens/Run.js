@@ -154,10 +154,10 @@ const Run = () => {
           {averagePace.toFixed(2)} min/km
         </Text>
         <Text className='text-black font-bold tracking-wider text-xl mb-3 text-center'>
-          Distancia
+          Tiempo
         </Text>
         <Text className='text-black font-bold tracking-wider text-xl mb-3 text-center'>
-          3,00 km
+          00:00:00
         </Text>
       </View>
       <View className='w-full items-center mt-2'>

@@ -11,6 +11,7 @@ import Activity from "./screens/Activity";
 import Swim from "./screens/Swim";
 import Bike from "./screens/Bike";
 import Run from "./screens/Run";
+import User from "./screens/User";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ function App() {
         <Stack.Screen name='Swim' component={Swim} />
         <Stack.Screen name='Bike' component={Bike} />
         <Stack.Screen name='Run' component={Run} />
+        <Stack.Screen name='User' component={User} />
       </Stack.Navigator>
     </NavigationContainer>
   );
