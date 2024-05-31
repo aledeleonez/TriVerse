@@ -1,6 +1,9 @@
 import express, { response } from "express";
 import {
+  createCycling,
   createRun,
+  createSwim,
+  createTriathlon,
   createUser,
   getUserByEmail,
   getUserById,
@@ -17,6 +20,12 @@ app.post("/users", async (req, res) => {
   res.status(201).send(user);
 });
 
+app.post("/triathlons", async (req, res) => {
+  const { userId } = req.body;
+  const triathlon = await createTriathlon(userId);
+  res.status(201).send(triathlon);
+});
+
 app.post("/runs", async (req, res) => {
   const { userId, triathlonId, time, distance, avgPace, map } = req.body;
   const run = await createRun(
@@ -28,6 +37,25 @@ app.post("/runs", async (req, res) => {
     map
   );
   res.status(201).send(run);
+});
+
+app.post("/cyclings", async (req, res) => {
+  const { userId, triathlonId, time, distance, avgSpeed, map } = req.body;
+  const cycling = await createCycling(
+    userId,
+    triathlonId,
+    time,
+    distance,
+    avgSpeed,
+    map
+  );
+  res.status(201).send(cycling);
+});
+
+app.post("/swims", async (req, res) => {
+  const { userId, triathlonId, time, distance, avgPace } = req.body;
+  const swim = await createSwim(userId, triathlonId, time, distance, avgPace);
+  res.status(201).send(swim);
 });
 
 app.get("/users/:id", async (req, res) => {
