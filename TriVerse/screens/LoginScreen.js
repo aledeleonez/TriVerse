@@ -94,7 +94,7 @@ export default function LoginScreen() {
             </TouchableOpacity>
           </View>
           <View className='flex-row justify-center'>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.push("ForgotPassword")}>
               <Text className='text-white underline'>
                 Olvidaste la contraseña?
               </Text>

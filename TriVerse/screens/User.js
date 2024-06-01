@@ -27,7 +27,10 @@ export default function User() {
               Alejandro de León Fernández
             </Text>
             <Text className='stext-gray-500 mb-1'>23 años | 1,89 m</Text>
-            <Text className='stext-gray-500'>Lanzarote, Islas Canarias</Text>
+            <Text className='stext-gray-500 mb-1'>
+              Lanzarote, Islas Canarias
+            </Text>
+            <Text className='text-blue-500'>Editar perfil</Text>
           </View>
         </View>
         <View className='p-4 bg-white mb-2'>

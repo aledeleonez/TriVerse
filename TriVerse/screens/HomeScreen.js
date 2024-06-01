@@ -7,20 +7,16 @@ import MapView, { Polyline } from "react-native-maps";
 export default function HomeScreen() {
   const navigation = useNavigation();
   const coordinates = [
-    { latitude: 28.958406, longitude: -13.758424 },
-    { latitude: 28.985438, longitude: -13.742631 },
-    { latitude: 28.995648, longitude: -13.742288 },
-    { latitude: 29.004178, longitude: -13.738951 },
-    { latitude: 29.005379, longitude: -13.735518 },
-    { latitude: 29.013786, longitude: -13.731055 },
-    { latitude: 29.014987, longitude: -13.725046 },
-    { latitude: 29.043205, longitude: -13.694491 },
-    { latitude: 29.043505, longitude: -13.686938 },
-    { latitude: 29.070965, longitude: -13.671831 },
-    { latitude: 29.108486, longitude: -13.665544 },
-    { latitude: 29.116285, longitude: -13.643486 },
-    { latitude: 29.097762, longitude: -13.620054 },
-    { latitude: 29.11411, longitude: -13.568384 },
+    { latitude: 28.958687, longitude: -13.558825 },
+    { latitude: 28.957732, longitude: -13.554472 },
+    { latitude: 28.9605848, longitude: -13.542799 },
+    { latitude: 28.977875, longitude: -13.530504 },
+    { latitude: 29.007042, longitude: -13.48467 },
+    { latitude: 29.03196, longitude: -13.520891 },
+    { latitude: 29.011752, longitude: -13.54561 },
+    { latitude: 28.980297, longitude: -13.54458 },
+    { latitude: 28.966781, longitude: -13.548013 },
+    { latitude: 28.958687, longitude: -13.558825 },
   ];
 
   const coordinatesSwim = [
@@ -30,6 +26,16 @@ export default function HomeScreen() {
     { latitude: 28.953252, longitude: -13.554561 },
     { latitude: 28.955524, longitude: -13.559458 },
     { latitude: 28.958396, longitude: -13.55875 },
+  ];
+
+  const coordinatesRun = [
+    { latitude: 28.958687, longitude: -13.558825 },
+    { latitude: 28.957957, longitude: -13.560995 },
+    { latitude: 28.956361, longitude: -13.559514 },
+    { latitude: 28.955929, longitude: -13.563656 },
+    { latitude: 28.954521, longitude: -13.565909 },
+    { latitude: 28.955028, longitude: -13.574942 },
+    { latitude: 28.948644, longitude: -13.59816 },
   ];
   return (
     <View className='flex-1'>
@@ -49,17 +55,17 @@ export default function HomeScreen() {
           />
           <View className='p-2 ml-12'>
             <View className='mb-2'>
-              <Text className='font-bold text-xl'>Ciclismo en Lanzarote</Text>
+              <Text className='font-bold text-xl'>Triatlón en Arrecife</Text>
               <Text>Alejandro de León Fernández</Text>
             </View>
             <View className='flex-row items-center'>
               <View className='flex-1'>
                 <Text>Distancia</Text>
-                <Text className='font-bold'>180,54 km</Text>
+                <Text className='font-bold'>60,54 km</Text>
               </View>
               <View className='flex-1'>
                 <Text>Tiempo</Text>
-                <Text className='font-bold'>4h 34min</Text>
+                <Text className='font-bold'>4h 17min</Text>
               </View>
             </View>
           </View>
@@ -76,7 +82,17 @@ export default function HomeScreen() {
           >
             <Polyline
               coordinates={coordinates}
-              strokeColor='#007EA7' // Color de la línea
+              strokeColor='#F7BD59' // Color de la línea
+              strokeWidth={4} // Ancho de la línea
+            />
+            <Polyline
+              coordinates={coordinatesSwim}
+              strokeColor='#003249' // Color de la línea
+              strokeWidth={4} // Ancho de la línea
+            />
+            <Polyline
+              coordinates={coordinatesRun}
+              strokeColor='#FF0000' // Color de la línea
               strokeWidth={4} // Ancho de la línea
             />
           </MapView>
@@ -88,17 +104,17 @@ export default function HomeScreen() {
           />
           <View className='p-2 ml-12'>
             <View className='mb-2'>
-              <Text className='font-bold text-xl'>Natación en Arrecife</Text>
+              <Text className='font-bold text-xl'>Triatlón de noche</Text>
               <Text>Alejandro de León Fernández</Text>
             </View>
             <View className='flex-row items-center'>
               <View className='flex-1'>
                 <Text>Distancia</Text>
-                <Text className='font-bold'>2300m</Text>
+                <Text className='font-bold'>35 km</Text>
               </View>
               <View className='flex-1'>
                 <Text>Tiempo</Text>
-                <Text className='font-bold'>1h 23min</Text>
+                <Text className='font-bold'>2h 10min</Text>
               </View>
             </View>
           </View>
@@ -123,7 +139,7 @@ export default function HomeScreen() {
       </ScrollView>
       {/* Pie de página */}
       <View className='bg-[#007EA7] h-20 flex-row justify-around items-center'>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push("EditUser")}>
           <Icon name='home' size={24} color='white' />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push("Activity")}>

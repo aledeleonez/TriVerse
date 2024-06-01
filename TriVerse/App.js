@@ -12,6 +12,9 @@ import Swim from "./screens/Swim";
 import Bike from "./screens/Bike";
 import Run from "./screens/Run";
 import User from "./screens/User";
+import ForgotPassword from "./screens/ForgotPassword";
+import Triathlon from "./screens/Triathlon";
+import EditUser from "./screens/EditUser";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +33,9 @@ function App() {
         <Stack.Screen name='Bike' component={Bike} />
         <Stack.Screen name='Run' component={Run} />
         <Stack.Screen name='User' component={User} />
+        <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
+        <Stack.Screen name='Triathlon' component={Triathlon} />
+        <Stack.Screen name='EditUser' component={EditUser} />
       </Stack.Navigator>
     </NavigationContainer>
   );
