@@ -5,6 +5,7 @@ import {
   createSwim,
   createTriathlon,
   createUser,
+  getRunById,
   getUserByEmail,
   getUserById,
   getUserCredentials,
@@ -15,9 +16,67 @@ const app = express();
 app.use(express.json());
 
 app.post("/users", async (req, res) => {
-  const { name, email, password } = req.body;
-  const user = await createUser(name, email, password);
+  const {
+    name,
+    email,
+    password,
+    birthDate,
+    height,
+    weight,
+    gender,
+    location,
+    favouriteSport,
+  } = req.body;
+  const user = await createUser(
+    name,
+    email,
+    password,
+    birthDate,
+    height,
+    weight,
+    gender,
+    location,
+    favouriteSport
+  );
   res.status(201).send(user);
+});
+
+app.put("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    name,
+    email,
+    password,
+    birthDate,
+    height,
+    weight,
+    gender,
+    location,
+    favouriteSport,
+  } = req.body;
+
+  try {
+    const result = await updateUser(
+      id,
+      name,
+      email,
+      password,
+      birthDate,
+      height,
+      weight,
+      gender,
+      location,
+      favouriteSport
+    );
+
+    if (result.affectedRows === 0) {
+      res.status(404).send({ message: "User not found" });
+    } else {
+      res.status(200).send({ message: "User updated successfully" });
+    }
+  } catch (error) {
+    res.status(500).send({ message: "Error updating user", error });
+  }
 });
 
 app.post("/triathlons", async (req, res) => {
@@ -79,6 +138,11 @@ app.get("/users", async (req, res) => {
       .status(400)
       .json({ error: "El usuario o la contraseña son incorrectos" });
   }
+});
+
+app.get("/runs/:id", async (req, res) => {
+  const run = getRunById(req.params.id);
+  if (run) res.status(200).send(run);
 });
 
 app.listen(8080, () => {

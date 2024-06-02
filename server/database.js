@@ -12,11 +12,65 @@ const pool = mysql
   .promise();
 
 //Crear usuario
-export async function createUser(name, email, password) {
+export async function createUser(
+  name,
+  email,
+  password,
+  birthDate,
+  height,
+  weight,
+  gender,
+  location,
+  favouriteSport
+) {
   const [result] = await pool.query(
-    `INSERT INTO Users (name, email, password) values (?,?,?)`,
-    [name, email, password]
+    `INSERT INTO Users (name, email, password, birthDate, height, weight, gender, location, favouriteSport) values (?,?,?,?,?,?,?,?,?)`,
+    [
+      name,
+      email,
+      password,
+      birthDate,
+      height,
+      weight,
+      gender,
+      location,
+      favouriteSport,
+    ]
   );
+  return result[0];
+}
+
+//Actualizar usuario
+export async function updateUser(
+  id,
+  name,
+  email,
+  password,
+  birthDate,
+  height,
+  weight,
+  gender,
+  location,
+  favouriteSport
+) {
+  const [result] = await pool.query(
+    `UPDATE Users 
+     SET name = ?, email = ?, password = ?, birthDate = ?, height = ?, weight = ?, gender = ?, location = ?, favouriteSport = ?
+     WHERE id = ?`,
+    [
+      name,
+      email,
+      password,
+      birthDate,
+      height,
+      weight,
+      gender,
+      location,
+      favouriteSport,
+      id,
+    ]
+  );
+  return result;
 }
 
 //Crear Triatlon
@@ -86,5 +140,11 @@ export async function getUserCredentials(email, password) {
     `SELECT * FROM Users WHERE email = ? AND password = ? `,
     [email, password]
   );
+  return row[0];
+}
+
+//Obtener carrera por id
+export async function getRunById(id) {
+  const [row] = await pool.query(`SELECT * FROM Runs WHERE id = ?`, [id]);
   return row[0];
 }
