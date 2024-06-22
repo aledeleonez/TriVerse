@@ -1,9 +1,11 @@
+import bcrypt from "bcryptjs";
 import User from "../models/users.js";
 
 const createUser = async (req, res) => {
   try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    req.body.password = hashedPassword;
     const user = await User.create(req.body);
-    console.log(user);
     res.status(201).json(user);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -23,7 +25,25 @@ const getUser = async (req, res) => {
   }
 };
 
-const getAllUsers = async (req, res) => {
+const getUserByEmail = async (req, res) => {
+  try {
+    const { email, password } = req.query;
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Contraseña incorrecta" });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const getAllUsers = async (res) => {
   try {
     const users = await User.findAll();
     res.status(200).json(users);
@@ -64,6 +84,7 @@ export default {
   createUser,
   getUser,
   getAllUsers,
+  getUserByEmail,
   updateUser,
   deleteUser,
 };
