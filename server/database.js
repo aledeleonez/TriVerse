@@ -15,7 +15,7 @@ const pool = mysql
 export async function createUser(
   name,
   email,
-  password,
+  hashedPassword,
   birthDate,
   height,
   weight,
@@ -28,7 +28,7 @@ export async function createUser(
     [
       name,
       email,
-      password,
+      hashedPassword,
       birthDate,
       height,
       weight,
@@ -134,13 +134,12 @@ export async function getUserByEmail(email) {
   return row[0];
 }
 
-//Obtener usuario por email y contraseña
-export async function getUserCredentials(email, password) {
-  const [row] = await pool.query(
-    `SELECT * FROM Users WHERE email = ? AND password = ? `,
-    [email, password]
-  );
-  return row[0];
+//Obtener usuario por email
+export async function getUserCredentials(email) {
+  const [rows] = await pool.query(`SELECT * FROM Users WHERE email = ?`, [
+    email,
+  ]);
+  return rows[0];
 }
 
 //Obtener carrera por id

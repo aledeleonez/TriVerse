@@ -15,6 +15,14 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 
+const bcrypt = require("bcryptjs");
+
+async function hashPassword(password) {
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  return hashedPassword;
+}
+
 app.post("/users", async (req, res) => {
   const {
     name,
@@ -27,10 +35,11 @@ app.post("/users", async (req, res) => {
     location,
     favouriteSport,
   } = req.body;
+  const hashedPassword = await hashPassword(password);
   const user = await createUser(
     name,
     email,
-    password,
+    hashedPassword,
     birthDate,
     height,
     weight,
@@ -130,13 +139,25 @@ app.get("/users/:email", async (req, res) => {
 app.get("/users", async (req, res) => {
   const email = req.query.email;
   const password = req.query.password;
-  const user = await getUserCredentials(email, password);
-  if (user) {
-    res.status(200).json({ message: `Email: ${email}, Password: ${password}` });
-  } else {
-    res
-      .status(400)
-      .json({ error: "El usuario o la contraseña son incorrectos" });
+  try {
+    const user = await getUserCredentials(email, password);
+    if (user) {
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (passwordMatch)
+        res
+          .status(200)
+          .json({ message: `Email: ${email}, Password: ${password}` });
+      else
+        res
+          .status(400)
+          .json({ error: "El usuario o la contraseña son incorrectos" });
+    } else {
+      res
+        .status(400)
+        .json({ error: "El usuario o la contraseña son incorrectos" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Error al autenticar el usuario" });
   }
 });
 
