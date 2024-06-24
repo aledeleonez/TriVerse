@@ -15,7 +15,7 @@ const getRun = async (req, res) => {
     if (user) {
       res.status(200).json(run);
     } else {
-      res.status(404).json({ message: "Run not found" });
+      res.status(404).json({ message: "No se ha encontrado la actividad" });
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
