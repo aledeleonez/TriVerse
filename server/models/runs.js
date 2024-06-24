@@ -27,7 +27,7 @@ const Runs = sequelize.define(
       allowNull: false,
     },
     avgPace: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.TIME,
       allowNull: false,
     },
     map: {

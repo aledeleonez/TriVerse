@@ -35,6 +35,16 @@ const getAllTriathlons = async (req, res) => {
   }
 };
 
+const getAllTriathlonsByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const triathlons = await Triathlons.findAll({ where: { userId } });
+    res.status(200).json(triathlons);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 const updateTriathlon = async (req, res) => {
   try {
     const triathlon = await Triathlons.findByPk(req.params.id);
@@ -67,6 +77,7 @@ export default {
   createTriathlon,
   getTriathlon,
   getAllTriathlons,
+  getAllTriathlonsByUserId,
   updateTriathlon,
   deleteTriathlon,
 };

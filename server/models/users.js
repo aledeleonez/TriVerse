@@ -38,7 +38,7 @@ const Users = sequelize.define(
       allowNull: true,
     },
     gender: {
-      type: DataTypes.ENUM("male", "female", "other"),
+      type: DataTypes.ENUM("hombre", "mujer", "otro"),
       allowNull: true,
     },
     location: {
